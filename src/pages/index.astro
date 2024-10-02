@@ -1,5 +1,7 @@
 ---
+import { getCollection } from "astro:content"
 
+const times = await getCollection("times")
 ---
 
 <html lang="en">
@@ -11,6 +13,13 @@
 		<title>Astro</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1>Astro Clock</h1>
+		<p>The current time is: <time>{new Date().toLocaleTimeString()}</time></p>
+		<p>Here are some times from the server:</p>
+		<ul>
+            {times.map((time) => (
+                <li>{new Date(time.data.utc_datetime).toLocaleTimeString()}</li>
+            ))}
+        </ul>
 	</body>
 </html>
